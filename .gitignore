@@ -1,0 +1,114 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/settings.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Hypothesis
+.hypothesis/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Project specific - user data
+uploads/templates/
+uploads/thumbnails/
+uploads/prints/
+uploads/imported_photos/
+uploads/import_*.xlsx
+output/
+storage.json
+marketplace_cards.json
+marketplace_settings.json
+template_presets.json
+category_templates.json
+backend/category_templates.json
+
+# Keep uploads folder structure
+!uploads/.gitkeep
+!uploads/templates/.gitkeep
+!uploads/thumbnails/.gitkeep
+!uploads/prints/.gitkeep
+
+# User data files (Excel imports)
+*.xlsx
+*.xls
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~

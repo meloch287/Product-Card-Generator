@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cyber/Neon Dark Theme */
+    --background: 230 25% 5%;
+    --background-secondary: 230 20% 8%;
+    --foreground: 220 20% 90%;
+    
+    --card: 230 20% 10%;
+    --card-foreground: 220 20% 90%;
+    
+    --popover: 230 20% 12%;
+    --popover-foreground: 220 20% 90%;
+    
+    /* Cyan/Electric accent */
+    --primary: 180 100% 50%;
+    --primary-foreground: 230 25% 5%;
+    
+    --secondary: 230 15% 15%;
+    --secondary-foreground: 220 20% 85%;
+    
+    --muted: 230 15% 18%;
+    --muted-foreground: 220 15% 55%;
+    
+    --accent: 280 100% 65%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 230 15% 18%;
+    --input: 230 15% 18%;
+    --ring: 180 100% 50%;
+    
+    --radius: 0.75rem;
+    
+    /* Point colors with glow */
+    --point-tl: 0 90% 65%;
+    --point-tr: 150 80% 50%;
+    --point-br: 210 100% 60%;
+    --point-bl: 45 100% 55%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(180 100% 50%), hsl(200 100% 60%));
+    --gradient-accent: linear-gradient(135deg, hsl(280 100% 65%), hsl(320 100% 60%));
+    --gradient-surface: linear-gradient(180deg, hsl(230 20% 12%), hsl(230 25% 8%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(180 100% 50% / 0.15), transparent 70%);
+    
+    --sidebar-background: 230 20% 8%;
+    --sidebar-foreground: 220 20% 90%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 230 25% 5%;
+    --sidebar-accent: 230 15% 15%;
+    --sidebar-accent-foreground: 220 20% 90%;
+    --sidebar-border: 230 15% 18%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background-image: 
+      radial-gradient(ellipse at 20% 0%, hsl(180 100% 50% / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, hsl(280 100% 65% / 0.05) 0%, transparent 50%);
+  }
+  
+  code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply relative bg-card/80 backdrop-blur-xl border border-border rounded-xl p-5;
+    background: linear-gradient(
+      135deg,
+      hsl(230 20% 12% / 0.9),
+      hsl(230 25% 8% / 0.95)
+    );
+    box-shadow: 
+      0 0 0 1px hsl(180 100% 50% / 0.05),
+      0 20px 40px -20px hsl(230 100% 5% / 0.5),
+      inset 0 1px 0 hsl(220 20% 90% / 0.05);
+  }
+  
+  .panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      hsl(180 100% 50% / 0.2),
+      transparent 50%,
+      hsl(280 100% 65% / 0.1)
+    );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  
+  .panel-header {
+    @apply flex items-center gap-2 text-sm font-semibold text-foreground mb-4;
+  }
+  
+  .panel-header-icon {
+    @apply w-8 h-8 rounded-lg flex items-center justify-center text-lg;
+    background: var(--gradient-primary);
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.3);
+  }
+  
+  .template-card {
+    @apply relative bg-secondary/50 border border-border/50 rounded-xl overflow-hidden 
+           transition-all duration-300;
+  }
+  
+  .template-card:hover {
+    @apply border-primary/30;
+    box-shadow: 
+      0 0 30px hsl(180 100% 50% / 0.1),
+      inset 0 1px 0 hsl(180 100% 50% / 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .template-card.selected {
+    @apply border-primary/50;
+    box-shadow: 
+      0 0 40px hsl(180 100% 50% / 0.2),
+      inset 0 0 20px hsl(180 100% 50% / 0.05);
+  }
+  
+  .point-handle {
+    @apply absolute w-5 h-5 rounded-full cursor-move 
+           border-2 border-background
+           transition-all duration-150;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  
+  .point-handle:hover {
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 15px currentColor);
+  }
+  
+  .point-tl { 
+    @apply bg-[hsl(var(--point-tl))]; 
+    --tw-shadow-color: hsl(var(--point-tl));
+  }
+  .point-tr { 
+    @apply bg-[hsl(var(--point-tr))]; 
+    --tw-shadow-color: hsl(var(--point-tr));
+  }
+  .point-br { 
+    @apply bg-[hsl(var(--point-br))]; 
+    --tw-shadow-color: hsl(var(--point-br));
+  }
+  .point-bl { 
+    @apply bg-[hsl(var(--point-bl))]; 
+    --tw-shadow-color: hsl(var(--point-bl));
+  }
+  
+  .btn-icon {
+    @apply p-2.5 rounded-lg bg-secondary/80 hover:bg-secondary 
+           text-muted-foreground hover:text-foreground
+           transition-all duration-200 border border-transparent;
+  }
+  
+  .btn-icon:hover {
+    @apply border-primary/20;
+    box-shadow: 0 0 15px hsl(180 100% 50% / 0.1);
+  }
+  
+  .btn-icon.active {
+    @apply bg-primary text-primary-foreground;
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.4);
+  }
+  
+  .folder-item {
+    @apply flex items-center gap-3 p-3.5 bg-secondary/40 rounded-xl
+           border border-transparent hover:border-primary/20
+           transition-all duration-200;
+  }
+  
+  .folder-item:hover {
+    @apply bg-secondary/60;
+    box-shadow: 0 0 20px hsl(180 100% 50% / 0.05);
+  }
+  
+  .drop-zone {
+    @apply border-2 border-dashed border-border/50 rounded-xl p-8
+           flex flex-col items-center justify-center gap-3
+           text-muted-foreground transition-all duration-300
+           bg-secondary/20;
+  }
+  
+  .drop-zone:hover {
+    @apply border-primary/40 text-foreground bg-secondary/30;
+  }
+  
+  .drop-zone.active {
+    @apply border-primary bg-primary/10;
+    box-shadow: inset 0 0 40px hsl(180 100% 50% / 0.1);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 20px hsl(180 100% 50% / 0.5);
+  }
+  
+  .stat-card {
+    @apply relative bg-secondary/50 rounded-xl p-4 overflow-hidden;
+  }
+  
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    opacity: 0.5;
+  }
+  
+  .cyber-grid {
+    background-image: 
+      linear-gradient(hsl(180 100% 50% / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(180 100% 50% / 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.3) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: linear-gradient(hsl(var(--primary) / 0.3), hsl(var(--accent) / 0.3));
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(hsl(var(--primary) / 0.5), hsl(var(--accent) / 0.5));
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+  
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-accent);
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 20px hsl(180 100% 50% / 0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 30px hsl(180 100% 50% / 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(180 100% 50% / 0.1),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
